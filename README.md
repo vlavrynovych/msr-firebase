@@ -1,2 +1,3 @@
 # msr-firebase
-Migration Script Runner: Firebase
+
+Firebase Migration Script Runner

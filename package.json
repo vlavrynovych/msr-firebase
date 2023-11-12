@@ -1,0 +1,31 @@
+{
+  "name": "msr-firebase",
+  "version": "0.1.0",
+  "description": "Firebase Migration Script Runner",
+  "main": "index.js",
+  "scripts": {
+    "start": "npm run build && node dist/index.js",
+    "build": "rimraf ./dist && tsc",
+    "start:dev": "npx nodemon",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "firebase",
+    "migration",
+    "migration script runner",
+    "migration script"
+  ],
+  "author": "Volodymyr Lavrynovych",
+  "license": "MIT",
+  "dependencies": {
+    "migration-script-runner": "^0.1.9"
+  },
+  "devDependencies": {
+    "@types/node": "^20.8.10",
+    "eslint": "^8.52.0",
+    "nodemon": "^3.0.1",
+    "rimraf": "^5.0.5",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.2.2"
+  }
+}
