@@ -1,3 +1,9 @@
 /node_modules
+
+# project folders
 /dist
-/migrations
+/backups
+
+# coverage folders
+/reports
+.nyc_output
