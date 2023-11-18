@@ -6,6 +6,7 @@
       "es6"
     ],
     "module": "commonjs",
+    "sourceMap": true,
     "declaration": true,
     "moduleResolution": "node",
     "rootDir": ".",
@@ -16,8 +17,9 @@
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "noImplicitAny": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    //    "noEmit": true // disables
   },
   "include": ["index.ts", "src/**/*", "test/**/*"],
-  "exclude": ["dist", "node_modules", "migrations/**/*"]
+  "exclude": ["dist", "node_modules"]
 }

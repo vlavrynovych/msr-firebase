@@ -2,12 +2,25 @@
   "name": "msr-firebase",
   "version": "0.1.0",
   "description": "Firebase Migration Script Runner",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "/dist"
+  ],
   "scripts": {
-    "start": "npm run build && node dist/index.js",
-    "build": "rimraf ./dist && tsc",
-    "start:dev": "npx nodemon",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "start:ts",
+    "start:js": "npm run build && node dist/index.js",
+    "start:ts": "npm run build && npx ts-node src/index.ts",
+    "build": "rimraf ./dist && tsc && rimraf ./dist/test",
+    "test": "npm run lint && npm run test:mocha",
+    "test:mocha": "cross-env TS_NODE_FILES=true mocha --color --exit test/**/*.ts",
+    "test:watch": "npx nodemon",
+    "test:mocha:report": "cross-env TS_NODE_FILES=true mocha --reporter mocha-junit-reporter --reporter-options mochaFile=./reports/mocha/test-results.xml --color --exit test/**/*.ts",
+    "test:coverage": "nyc npm run test:mocha:report",
+    "test:coverage:coveralls": "nyc report --reporter=text-lcov | coveralls",
+    "test:report": "rimraf ./reports && npm run lint:report && npm run test:coverage",
+    "lint": "eslint ./src/ --ext .ts",
+    "lint:report": "eslint ./src/ --ext .ts --format junit --output-file ./reports/eslint.xml"
   },
   "keywords": [
     "firebase",
@@ -15,17 +28,50 @@
     "migration script runner",
     "migration script"
   ],
-  "author": "Volodymyr Lavrynovych",
-  "license": "MIT",
-  "dependencies": {
-    "migration-script-runner": "^0.1.9"
+  "author": {
+    "name": "Volodymyr Lavrynovych",
+    "email": "volodyalavrynovych@gmail.com",
+    "url": "https://www.instagram.com/vlavrynovych/"
   },
+  "license": "MIT",
   "devDependencies": {
+    "@types/chai": "^4.3.9",
+    "@types/chai-as-promised": "^7.1.7",
+    "@types/chai-spies": "^1.0.5",
+    "@types/figlet": "^1.5.7",
+    "@types/mocha": "^10.0.3",
     "@types/node": "^20.8.10",
-    "eslint": "^8.52.0",
+    "@types/sinon": "^17.0.0",
+    "@typescript-eslint/eslint-plugin": "^6.9.1",
+    "chai": "^4.3.10",
+    "chai-as-promised": "^7.1.1",
+    "chai-spies": "^1.1.0",
+    "coveralls": "^3.1.1",
+    "cross-env": "^7.0.3",
+    "eslint": "^8.53.0",
+    "eslint-plugin-only-warn": "^1.1.0",
+    "mocha": "^10.2.0",
+    "mocha-junit-reporter": "^2.2.1",
     "nodemon": "^3.0.1",
+    "nyc": "^15.1.0",
     "rimraf": "^5.0.5",
+    "sinon": "^17.0.1",
     "ts-node": "^10.9.1",
     "typescript": "^5.2.2"
+  },
+  "dependencies": {
+    "@types/lodash": "^4.14.200",
+    "migration-script-runner": "^0.1.9",
+    "ascii-table3": "^0.9.0",
+    "lodash": "^4.17.21",
+    "moment": "^2.29.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vlavrynovych/msr-firebase.git"
+  },
+  "bugs": {
+    "url": "https://github.com/vlavrynovych/msr-firebase/issues",
+    "email": "volodyalavrynovych@gmail.com"
   }
 }
