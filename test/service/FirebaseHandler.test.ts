@@ -18,7 +18,7 @@ describe('FirebaseHandler', () => {
 
         // when
         spy.on(handler, ['getName', 'isInitialized', 'createTable', 'validateTable', 'register', 'getAll']);
-        const executor = new MigrationScriptExecutor(handler);
+        new MigrationScriptExecutor(handler);
 
         // then
         expect(handler.getName).have.been.called.once
