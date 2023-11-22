@@ -4,14 +4,18 @@ export class FirebaseHandler implements IDatabaseMigrationHandler {
 
     constructor() {
         this.cfg = new Config()
-        this.db = new class implements IDB {}
+        this.db = new class implements IDB {
+            test() {
+                throw new Error("Method not implemented.");
+            }
+        }
     }
 
     cfg: Config;
     db: IDB;
 
     getName(): string {
-        throw new Error("Method not implemented.");
+        return "Firebase"
     }
     isInitialized(tableName: string): Promise<boolean> {
         throw new Error("Method not implemented." + tableName);
