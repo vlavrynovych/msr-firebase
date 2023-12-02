@@ -17,26 +17,29 @@ export class BackupService implements IBackup {
     }
 
     async getData() {
-        let data = await Promise.all(this.nodes.map(node => this.db.ref(node).once('value')));
+        const data = await Promise.all(this.nodes.map(node => this.db.ref(node).once('value')));
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const obj = {} as any;
         return this.nodes.reduce((acc, name, index) => {
             acc[name] = data[index].val();
             console.log(acc[name]);
             return acc;
-        }, {} as any);
+        }, obj);
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     async saveData(data:any) {
-        let tasks = Object.keys(data).map((node:string) => {
-            let ref = this.db.ref(node);
+        const tasks = Object.keys(data).map((node:string) => {
+            const ref = this.db.ref(node);
             // let method = this.merge ? ref.update : ref.set;
-            let value = data[node];
+            const value = data[node];
             ref.set(value)
         });
         await Promise.all(tasks);
     }
 
     async backup(): Promise<string> {
-        let data = await this.getData()
+        const data = await this.getData()
         return JSON.stringify(data, null, '  ');
     }
 

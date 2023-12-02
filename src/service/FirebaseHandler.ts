@@ -20,7 +20,7 @@ export class FirebaseHandler implements IDatabaseMigrationHandler {
     }
 
     public static async init(cfg:AppConfig):Promise<FirebaseHandler> {
-        let db = await DBConnector.connect(cfg);
+        const db = await DBConnector.connect(cfg);
         return new FirebaseHandler(cfg, db);
     }
 
@@ -30,19 +30,22 @@ export class FirebaseHandler implements IDatabaseMigrationHandler {
         return `Firebase v${version}`
     }
     async isInitialized(tableName: string): Promise<boolean> {
+        console.log(tableName);
         return true
     }
     async createTable(tableName: string): Promise<boolean> {
+        console.log(tableName);
         return true
     }
     async validateTable(tableName: string): Promise<boolean> {
+        console.log(tableName);
         return true
     }
     async getAll(): Promise<MigrationScript[]> {
         return []
     }
     async register(details: IMigrationInfo): Promise<void> {
-
+        console.log(details);
     }
 
     async backup(): Promise<string> {

@@ -5,7 +5,7 @@ import {AppConfig} from "../model";
 export class DBConnector {
 
     public static async connect(cfg:AppConfig): Promise<database.Database> {
-        let filePath = cfg.applicationCredentials
+        const filePath = cfg.applicationCredentials
         if(!filePath) throw new Error("Application credentials not found")
 
         const serviceAccount = await import(filePath);
