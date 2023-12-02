@@ -3,8 +3,11 @@ import {MigrationScriptExecutor} from "migration-script-runner";
 import * as chai from "chai";
 import spies from 'chai-spies';
 chai.use(spies);
+import chaiAsPromised from 'chai-as-promised';
+chai.use(chaiAsPromised);
 import {FirebaseHandler} from "../../src";
 import {afterEach} from "mocha";
+import {TestConfig} from "../TestConfig";
 
 describe('FirebaseHandler', () => {
 
@@ -12,13 +15,30 @@ describe('FirebaseHandler', () => {
         spy.restore();
     })
 
-    it('test', async () => {
+    it('init', async () => {
         // having
-        const handler = new FirebaseHandler()
+        const handler = await FirebaseHandler.init(new TestConfig())
 
         // when
-        spy.on(handler, ['getName', 'isInitialized', 'createTable', 'validateTable', 'register', 'getAll']);
-        new MigrationScriptExecutor(handler);
+        spy.on(handler, ['getName', 'isInitialized', 'createTable', 'validateTable', 'register', 'getAll'])
+        new MigrationScriptExecutor(handler)
+
+        // then
+        expect(handler.getName).have.been.called.once
+        expect(handler.isInitialized).have.not.been.called
+        expect(handler.createTable).have.not.been.called
+        expect(handler.validateTable).have.not.been.called
+        expect(handler.register).have.not.been.called
+        expect(handler.getAll).have.not.been.called
+    })
+
+    it('backup', async () => {
+        // having
+        const handler = await FirebaseHandler.init(new TestConfig())
+
+        // when
+        spy.on(handler, ['getName', 'isInitialized', 'createTable', 'validateTable', 'register', 'getAll'])
+        await expect(new MigrationScriptExecutor(handler).migrate()).to.be.rejectedWith("Schema version table is invalid");
 
         // then
         expect(handler.getName).have.been.called.once

@@ -23,6 +23,14 @@ jobs:
           name: Creates backups folder
           command: mkdir backups
       - run:
+          name: Creates credentials folder
+          command: mkdir key
+      - run:
+          name: Prepare credentials
+          command:
+            - ECHO $PRIVATE_KEY > ./key/private_key.json
+            - GOOGLE_APPLICATION_CREDENTIALS=./key/private_key.json
+      - run:
           name: Run Tests with reports
           command: npm run test:report
       - store_test_results:

@@ -1,6 +1,7 @@
 /node_modules
 
 # project folders
+/key
 /dist
 /backups
 
