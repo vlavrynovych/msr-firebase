@@ -25,8 +25,12 @@ jobs:
       - run:
           name: Creates credentials folder
           command: mkdir key
-      - run: echo $PRIVATE_KEY > ./key/private_key.json
-      - run: GOOGLE_APPLICATION_CREDENTIALS=./key/private_key.json
+      - run:
+          name: Creates credentials file
+          command: echo $PRIVATE_KEY > $PWD/key/private_key.json
+      - run:
+          name: Sets path to credentials
+          command: GOOGLE_APPLICATION_CREDENTIALS=$PWD/key/private_key.json
       - run:
           name: Run Tests with reports
           command: npm run test:report

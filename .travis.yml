@@ -11,5 +11,8 @@ install:
 
 script:
   - mkdir backups
+  - mkdir key
+  - echo $PRIVATE_KEY > $PWD/key/private_key.json
+  - GOOGLE_APPLICATION_CREDENTIALS=$PWD/key/private_key.json
   - npm run test:report
   - npm run test:coverage:coveralls
