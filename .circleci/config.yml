@@ -7,6 +7,8 @@ jobs:
         auth:
           username: $DOCKER_USER
           password: $DOCKER_TOKEN
+    environment:
+      GOOGLE_APPLICATION_CREDENTIALS: $PWD/key/private_key.json
     steps:
       - checkout
       - restore_cache:
@@ -27,12 +29,8 @@ jobs:
           command: mkdir key
       - run:
           name: Creates credentials file
-          command: echo $PRIVATE_KEY > $PWD/key/private_key.json
-      - run:
-          name: Sets path to credentials
-          environment:
-            GOOGLE_APPLICATION_CREDENTIALS: $PWD/key/private_key.json
-          command: echo $GOOGLE_APPLICATION_CREDENTIALS
+          command: echo $PRIVATE_KEY > $GOOGLE_APPLICATION_CREDENTIALS
+      - run: echo $GOOGLE_APPLICATION_CREDENTIALS
       - run:
           name: Run Tests with reports
           command: npm run test:report
