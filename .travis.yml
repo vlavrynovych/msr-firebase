@@ -10,6 +10,10 @@ install:
   - npm install
 
 script:
-  - sh scripts/ci.sh
+  - mkdir backups
+  - mkdir key
+  - echo $PRIVATE_KEY > $PWD/key/private_key.json
+  - export GOOGLE_APPLICATION_CREDENTIALS="$PWD/key/private_key.json"
+  - echo $GOOGLE_APPLICATION_CREDENTIALS
   - npm run test:report
   - npm run test:coverage:coveralls
