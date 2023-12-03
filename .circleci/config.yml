@@ -8,7 +8,7 @@ jobs:
           username: $DOCKER_USER
           password: $DOCKER_TOKEN
     environment:
-      GOOGLE_APPLICATION_CREDENTIALS: $PWD/key/private_key.json
+      GOOGLE_APPLICATION_CREDENTIALS: ./key/private_key.json
     steps:
       - checkout
       - restore_cache:
