@@ -45,11 +45,12 @@ jobs:
       - run: npm install
       - run: mkdir backups
       - run: mkdir key
-      - run: echo $PRIVATE_KEY > $PWD/key/private_key.json
-      - run: export GOOGLE_APPLICATION_CREDENTIALS="$PWD/key/private_key.json"
-      - run: echo $GOOGLE_APPLICATION_CREDENTIALS
+      - run: | 
+          echo $PRIVATE_KEY > $PWD/key/private_key.json
+          export GOOGLE_APPLICATION_CREDENTIALS="$PWD/key/private_key.json"
+          echo $GOOGLE_APPLICATION_CREDENTIALS
+          npm run test:mocha
 
-      - run: npm run test:mocha
       - run: npm run build
 
       - uses: JS-DevTools/npm-publish@v3
