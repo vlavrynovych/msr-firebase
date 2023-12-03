@@ -50,6 +50,9 @@ jobs:
           export GOOGLE_APPLICATION_CREDENTIALS="$PWD/key/private_key.json"
           echo $GOOGLE_APPLICATION_CREDENTIALS
           npm run test:mocha
+        env:
+          PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
       - run: npm run build
 
