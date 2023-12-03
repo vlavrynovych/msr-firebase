@@ -31,7 +31,7 @@ jobs:
       - run:
           name: Sets path to credentials
           environment:
-            GOOGLE_APPLICATION_CREDENTIALS: "$PWD/key/private_key.json"
+            GOOGLE_APPLICATION_CREDENTIALS: $PWD/key/private_key.json
           command: echo $GOOGLE_APPLICATION_CREDENTIALS
       - run:
           name: Run Tests with reports
