@@ -43,12 +43,8 @@ jobs:
           node-version: "16"
 
       - run: npm install
-      - run: mkdir backups
-      - run: mkdir key
-      - run: | 
-          echo $PRIVATE_KEY > $PWD/key/private_key.json
-          export GOOGLE_APPLICATION_CREDENTIALS="$PWD/key/private_key.json"
-          echo $GOOGLE_APPLICATION_CREDENTIALS
+      - run: |
+          source scripts/ci.sh
           npm run test:mocha
         env:
           PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}

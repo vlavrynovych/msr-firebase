@@ -20,17 +20,9 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
       - run:
-          name: Creates backups folder
-          command: mkdir backups
-      - run:
-          name: Creates credentials folder
-          command: mkdir key
-      - run:
           name: Run Tests with reports
           command: |
-            export GOOGLE_APPLICATION_CREDENTIALS="$PWD/key/private_key.json"
-            echo $GOOGLE_APPLICATION_CREDENTIALS
-            echo $PRIVATE_KEY > $GOOGLE_APPLICATION_CREDENTIALS
+            source scripts/ci.sh
             npm run test:report
       - store_test_results:
           path: reports
