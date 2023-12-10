@@ -11,9 +11,10 @@ export class DBConnector {
         if(!filePath) throw new Error("Application credentials not found")
 
         const serviceAccount = await import(filePath);
+        const random = Math.floor(Math.random() * 6) + 1
         const app = admin.initializeApp({
             credential: admin.credential.cert(serviceAccount),
-        }, `${Date.now()}`);
+        }, `${Date.now()}${random}`);
 
         return app.database(cfg.databaseUrl)
     }

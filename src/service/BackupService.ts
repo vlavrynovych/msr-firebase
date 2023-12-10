@@ -10,13 +10,11 @@ export class BackupService implements IBackup {
         ]
     }
 
-    merge:boolean = false
-
     constructor(private db:database.Database,
                 private nodes = BackupService.NODES.ALL) {
     }
 
-    async getData() {
+    private async getData() {
         const data = await Promise.all(this.nodes.map(node => this.db.ref(node).once('value')));
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const obj = {} as any;
@@ -28,13 +26,12 @@ export class BackupService implements IBackup {
     }
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    async saveData(data:any) {
+    private async saveData(data:any) {
         const tasks = Object.keys(data).map((node:string) => {
             const ref = this.db.ref(node);
-            // let method = this.merge ? ref.update : ref.set;
             const value = data[node];
-            ref.set(value)
-        });
+            return ref.set(value)
+        })
         await Promise.all(tasks);
     }
 

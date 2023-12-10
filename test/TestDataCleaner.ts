@@ -1,11 +1,12 @@
 import {TestConfig} from "./TestConfig";
-import {DBConnector, EntityService, IEntity} from "../src";
+import {EntityService, IEntity} from "../src";
+import {database} from "firebase-admin";
 
 export class TestDataCleaner {
 
     private readonly cfg:TestConfig
 
-    constructor() {
+    constructor(private db:database.Database) {
         this.cfg = new TestConfig()
     }
 
@@ -26,11 +27,7 @@ export class TestDataCleaner {
     }
 
     private async getService() {
-        if(!this.service) {
-            const db = await DBConnector.connect(this.cfg)
-            this.service = new EntityService<IEntity>(db, "/")
-        }
-
+        if(!this.service) this.service = new EntityService<IEntity>(this.db, "/")
         return this.service
     }
 }

@@ -3,7 +3,7 @@ import {MigrationScriptExecutor} from "migration-script-runner";
 import sinon from 'sinon';
 import {EntityService, FirebaseHandler} from "../../src";
 import {afterEach, after} from "mocha";
-import {TestConfig, TestUtils} from "../index";
+import {TestConfig, TestUtils, TestEntity} from "../index";
 
 let processExit = sinon.stub(process, 'exit')
 
@@ -51,23 +51,20 @@ describe('FirebaseHandler', () => {
         // then
         expect(handler.getName).have.been.called.once
         expect(handler.backup.backup).have.been.called.once
-        expect(handler.schemaVersion.isInitialized).have.been.called
-        expect(handler.schemaVersion.createTable).have.not.been.called
-        expect(handler.schemaVersion.validateTable).have.been.called
+        expect(handler.schemaVersion.isInitialized).have.been.called.once
+        expect(handler.schemaVersion.createTable).have.been.called.once
+        expect(handler.schemaVersion.validateTable).have.been.called.once
         expect(handler.schemaVersion.migrations.save).have.not.been.called
         expect(handler.schemaVersion.migrations.getAll).have.not.been.called
 
         // and
-        const testService = new EntityService(handler.db, handler.cfg.buildPath("test-case-1"))
+        const testService = new EntityService<TestEntity>(handler.db, handler.cfg.buildPath("test-case-1"))
         const records = await testService.getAll();
-
         expect(records.length).eq(1, "Should be one records in test-case-1 table")
 
         const record = records[0];
-
-        expect(record.hasOwnProperty('customField'), "Should have customField prop").is.true
-        expect((record as any).customField).eq('test-case-1', "The customField prop should have test-case-1 as a value")
-
+        expect(record.hasOwnProperty('test'), "Should have test prop").is.true
+        expect((record as TestEntity).test).eq('test-case-1', "The customField prop should have test-case-1 as a value")
     })
 
 })

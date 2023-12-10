@@ -10,7 +10,7 @@ export class FirebaseDataService {
     protected constructor(protected db:database.Database) {}
 
     async getList(path: string) {
-        const snapshot = await this.db.ref(path).once(VALUE);
+        const snapshot = await this.getSnapshot(path)
         return FirebaseDataService.handleList(snapshot);
     }
 
@@ -20,7 +20,7 @@ export class FirebaseDataService {
     }
 
     async getObject(path: string) {
-        const snapshot = await this.db.ref(path).once(VALUE);
+        const snapshot = await this.getSnapshot(path)
         return FirebaseDataService.mixKey(snapshot.val(), snapshot.key)
     }
 
@@ -58,5 +58,9 @@ export class FirebaseDataService {
             writable: true
         });
         return obj;
+    }
+
+    public getSnapshot(path:string) {
+        return this.db.ref(path).once(VALUE)
     }
 }

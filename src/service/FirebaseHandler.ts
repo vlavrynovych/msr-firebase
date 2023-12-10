@@ -1,4 +1,4 @@
-import {IDatabaseMigrationHandler, ISchemaVersion} from "migration-script-runner";
+import {IDatabaseMigrationHandler} from "migration-script-runner";
 import {database} from "firebase-admin";
 import {version} from '../../package.json'
 
@@ -13,11 +13,12 @@ import {
 export class FirebaseHandler implements IDatabaseMigrationHandler {
 
     backup:BackupService
-    schemaVersion: ISchemaVersion
+    schemaVersion:SchemaVersionService
 
     private constructor(public cfg:AppConfig, public db:database.Database) {
         this.backup = new BackupService(db);
-        this.schemaVersion = new SchemaVersionService(new MigrationScriptService(db, this.cfg.buildPath(this.cfg.tableName)))
+        const mss = new MigrationScriptService(db, this.cfg.buildPath(this.cfg.tableName))
+        this.schemaVersion = new SchemaVersionService(mss, cfg)
     }
 
     public static async getInstance(cfg:AppConfig):Promise<FirebaseHandler> {

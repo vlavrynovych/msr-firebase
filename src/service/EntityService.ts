@@ -3,7 +3,7 @@ import {database} from "firebase-admin";
 import {IEntity} from "../interface";
 
 export class EntityService<T extends IEntity> extends FirebaseDataService {
-    constructor(protected db: database.Database,
+    constructor(public db: database.Database,
                 protected root:string) {
         super(db);
     }
