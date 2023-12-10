@@ -5,13 +5,13 @@ import DataSnapshot = database.DataSnapshot;
 const VALUE = 'value';
 const KEY = 'key';
 
-export abstract class AbstractFirebaseService {
+export class FirebaseDataService {
 
     protected constructor(protected db:database.Database) {}
 
     async getList(path: string) {
         const snapshot = await this.db.ref(path).once(VALUE);
-        return AbstractFirebaseService.handleList(snapshot);
+        return FirebaseDataService.handleList(snapshot);
     }
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -21,7 +21,7 @@ export abstract class AbstractFirebaseService {
 
     async getObject(path: string) {
         const snapshot = await this.db.ref(path).once(VALUE);
-        return AbstractFirebaseService.mixKey(snapshot.val(), snapshot.key)
+        return FirebaseDataService.mixKey(snapshot.val(), snapshot.key)
     }
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -36,11 +36,11 @@ export abstract class AbstractFirebaseService {
             .orderByChild(propertyName)
             .equalTo(value)
             .once(VALUE);
-        return AbstractFirebaseService.handleList(snapshot);
+        return FirebaseDataService.handleList(snapshot);
     }
 
     static handleList(snapshot:DataSnapshot) {
-        return AbstractFirebaseService.convertObjectToList(snapshot.val());
+        return FirebaseDataService.convertObjectToList(snapshot.val());
     }
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

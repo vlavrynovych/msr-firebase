@@ -1,4 +1,4 @@
-export * from './AbstractFirebaseService'
+export * from './FirebaseDataService'
 export * from './BackupService'
 export * from './DBConnector'
 export * from './EntityService'
