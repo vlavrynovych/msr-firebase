@@ -17,3 +17,24 @@
 [npm-image]: https://img.shields.io/npm/v/msr-firebase.svg?style=flat
 [npm-url]: https://npmjs.org/package/msr-firebase
 [npm-downloads-image]: https://img.shields.io/npm/dm/msr-firebase.svg?style=flat
+
+## Table of Contents
+- [Features](#features)
+- [Installation](#installation)
+- [Examples](#examples)
+- [Documentation](#documentation)
+
+## Features
+## Installation
+## Examples
+## Documentation
+
+## How to obtain Service Account Key
+
+Firebase Documentation: https://firebase.google.com/docs/admin/setup
+
+Steps:
+1. Open
+`https://console.firebase.google.com/project/{your_project_id}/settings/serviceaccounts/adminsdk` link, 
+    where {your_project_id} should be replaced
+2. Click **Generate new private key** button and download your private key as a JSON file
