@@ -1,4 +1,4 @@
-import {TestCleaner} from "./TestCleaner";
+import {TestDataCleaner} from "./TestDataCleaner";
 
 // inits chai-spies
 import * as chai from "chai";
@@ -11,10 +11,10 @@ chai.use(chaiAsPromised);
 
 export class TestUtils {
     public static shift = `/test-${Date.now()}`
-    private static cleaner:TestCleaner
+    private static cleaner:TestDataCleaner
 
     public static async clean() {
-        if(!TestUtils.cleaner) TestUtils.cleaner = new TestCleaner()
+        if(!TestUtils.cleaner) TestUtils.cleaner = new TestDataCleaner()
         await TestUtils.cleaner.clean()
     }
 }

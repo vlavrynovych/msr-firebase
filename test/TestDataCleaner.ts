@@ -1,7 +1,7 @@
 import {TestConfig} from "./TestConfig";
 import {DBConnector, EntityService, IEntity} from "../src";
 
-export class TestCleaner {
+export class TestDataCleaner {
 
     private readonly cfg:TestConfig
 
