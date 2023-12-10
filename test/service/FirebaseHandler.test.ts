@@ -23,16 +23,18 @@ describe('FirebaseHandler', () => {
         const handler = await FirebaseHandler.getInstance(new TestConfig())
 
         // when
-        spy.on(handler, ['getName', 'isInitialized', 'createTable', 'validateTable', 'register', 'getAll'])
+        spy.on(handler, ['getName'])
+        spy.on(handler.schemaVersion, ['isInitialized', 'createTable', 'validateTable'])
+        spy.on(handler.schemaVersion.migrations, ['save', 'getAll'])
         new MigrationScriptExecutor(handler)
 
         // then
         expect(handler.getName).have.been.called.once
-        expect(handler.isInitialized).have.not.been.called
-        expect(handler.createTable).have.not.been.called
-        expect(handler.validateTable).have.not.been.called
-        expect(handler.register).have.not.been.called
-        expect(handler.getAll).have.not.been.called
+        expect(handler.schemaVersion.isInitialized).have.not.been.called
+        expect(handler.schemaVersion.createTable).have.not.been.called
+        expect(handler.schemaVersion.validateTable).have.not.been.called
+        expect(handler.schemaVersion.migrations.save).have.not.been.called
+        expect(handler.schemaVersion.migrations.getAll).have.not.been.called
     })
 
     it('golden path', async () => {
@@ -40,17 +42,20 @@ describe('FirebaseHandler', () => {
         const handler = await FirebaseHandler.getInstance(new TestConfig())
 
         // when
-        spy.on(handler, ['backup', 'getName', 'isInitialized', 'createTable', 'validateTable', 'register', 'getAll'])
+        spy.on(handler, ['getName'])
+        spy.on(handler.backup, ['backup'])
+        spy.on(handler.schemaVersion, ['isInitialized', 'createTable', 'validateTable'])
+        spy.on(handler.schemaVersion.migrations, ['save', 'getAll'])
         await new MigrationScriptExecutor(handler).migrate();
 
         // then
         expect(handler.getName).have.been.called.once
-        expect(handler.backup).have.been.called.once
-        expect(handler.isInitialized).have.been.called
-        expect(handler.createTable).have.not.been.called
-        expect(handler.validateTable).have.been.called
-        expect(handler.register).have.not.been.called
-        expect(handler.getAll).have.not.been.called
+        expect(handler.backup.backup).have.been.called.once
+        expect(handler.schemaVersion.isInitialized).have.been.called
+        expect(handler.schemaVersion.createTable).have.not.been.called
+        expect(handler.schemaVersion.validateTable).have.been.called
+        expect(handler.schemaVersion.migrations.save).have.not.been.called
+        expect(handler.schemaVersion.migrations.getAll).have.not.been.called
 
         // and
         const testService = new EntityService(handler.db, handler.cfg.buildPath("test-case-1"))

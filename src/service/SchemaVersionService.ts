@@ -1,4 +1,9 @@
-export class SchemaVersionService {
+import {ISchemaVersion} from "migration-script-runner";
+import {MigrationScriptService} from "./MigrationScriptService";
+
+export class SchemaVersionService implements ISchemaVersion {
+
+    constructor(public migrations: MigrationScriptService) {}
 
     async createTable(tableName: string): Promise<boolean> {
         console.log(tableName)
@@ -14,5 +19,4 @@ export class SchemaVersionService {
         console.log(tableName)
         return true;
     }
-
 }

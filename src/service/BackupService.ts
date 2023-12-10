@@ -43,9 +43,8 @@ export class BackupService implements IBackup {
         return JSON.stringify(data, null, '  ');
     }
 
-    async restore(data: string): Promise<string> {
+    async restore(data: string): Promise<void> {
         await this.saveData(JSON.parse(data))
-        return "ok"
     }
 
 }

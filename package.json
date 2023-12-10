@@ -1,6 +1,6 @@
 {
   "name": "msr-firebase",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Firebase Migration Script Runner",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -65,7 +65,7 @@
     "@types/lodash": "^4.14.200",
     "ascii-table3": "^0.9.0",
     "lodash": "^4.17.21",
-    "migration-script-runner": "^0.1.9",
+    "migration-script-runner": "^0.1.11",
     "moment": "^2.29.4"
   },
   "repository": {
