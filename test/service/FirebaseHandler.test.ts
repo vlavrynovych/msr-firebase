@@ -1,23 +1,17 @@
 import {expect, spy} from "chai";
 import {MigrationScriptExecutor} from "migration-script-runner";
-import * as chai from "chai";
-import spies from 'chai-spies';
 import sinon from 'sinon';
-chai.use(spies);
-import chaiAsPromised from 'chai-as-promised';
-chai.use(chaiAsPromised);
 import {EntityService, FirebaseHandler} from "../../src";
 import {afterEach, after} from "mocha";
-import {TestConfig} from "../TestConfig";
-import {TestCleaner} from "../TestCleaner";
+import {TestConfig, TestUtils} from "../index";
 
 let processExit = sinon.stub(process, 'exit')
 
 describe('FirebaseHandler', () => {
 
     afterEach(async () => {
-        await TestCleaner.clean()
         spy.restore();
+        await TestUtils.clean()
     })
 
     after(async () => {
