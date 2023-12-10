@@ -1,3 +1,6 @@
-export * from './DBConnector'
+export * from './AbstractFirebaseService'
 export * from './BackupService'
+export * from './DBConnector'
+export * from './EntityService'
 export * from './FirebaseHandler'
+export * from './MigrationScriptService'
