@@ -1,6 +1,5 @@
 import {database} from "firebase-admin";
 import _ from 'lodash';
-import DataSnapshot = database.DataSnapshot;
 
 const VALUE = 'value';
 const KEY = 'key';
