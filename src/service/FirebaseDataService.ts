@@ -49,7 +49,7 @@ export class FirebaseDataService {
     }
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    static mixKey(obj:any|undefined, key:string|null|undefined) {
+    static mixKey(obj:any, key:string|null|undefined) {
         if(!obj || !key) return obj;
 
         Object.defineProperty(obj, KEY, {

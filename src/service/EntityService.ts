@@ -86,10 +86,7 @@ export class EntityService<T extends IEntity> extends FirebaseDataService {
     }
 }
 
-export type ModifierFunction<T> = {
-    (entity:T): T
-}
-
+export type ModifierFunction<T> = (entity:T) => T
 export type ModificationResults = {
     skipped: string[],
     updated: string[]
