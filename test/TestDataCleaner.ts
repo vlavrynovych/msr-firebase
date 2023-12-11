@@ -22,7 +22,7 @@ export class TestDataCleaner {
         const service = await this.getService();
         const all = await service.getAll()
         const ids = all.map(r => r.key as string)
-        await service.removeAll(ids)
+        await service.removeByIds(ids)
         process.exit(0)
     }
 

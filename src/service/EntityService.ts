@@ -16,7 +16,7 @@ export class EntityService<T extends IEntity> extends FirebaseDataService {
         return this.getObject(this.root);
     }
 
-    get(key:string) {
+    get(key:string):Promise<T> {
         return this.getObject(`${this.root}/${key}`);
     }
 
@@ -33,7 +33,7 @@ export class EntityService<T extends IEntity> extends FirebaseDataService {
         return ref.key as string;
     }
 
-    async updateAll(modifier:ModifierFunction<T>) {
+    async updateAll(update:UpdateFunction<T>) {
         return this.getAll().then(async entities => {
 
             const results:ModificationResults = {
@@ -42,16 +42,15 @@ export class EntityService<T extends IEntity> extends FirebaseDataService {
             };
 
             const tryUpdate = async (entity: T) => {
-                if(!entity.key) return
-                const modifiedEntity:T = modifier(entity);
+                const isModified = update(entity);
 
-                if (!modifiedEntity) {
-                    results.skipped.push(entity.key)
+                if (!isModified) {
+                    results.skipped.push(entity.key as string)
                     return;
                 }
 
-                await this.save(modifiedEntity);
-                results.updated.push(entity.key)
+                await this.save(entity);
+                results.updated.push(entity.key as string)
             }
 
             const tasks = entities.map(entity => tryUpdate(entity));
@@ -75,9 +74,13 @@ export class EntityService<T extends IEntity> extends FirebaseDataService {
         return key;
     }
 
-    async removeAll(ids:string[]) {
+    async removeByIds(ids:string[]) {
         const task = ids.map(id => this.remove(id));
         await Promise.all(task)
+    }
+
+    async removeAll() {
+        await this.setObject(this.root, '')
     }
 
     findAllBy(propertyName:string,
@@ -86,7 +89,7 @@ export class EntityService<T extends IEntity> extends FirebaseDataService {
     }
 }
 
-export type ModifierFunction<T> = (entity:T) => T
+export type UpdateFunction<T> = (entity:T) => boolean
 export type ModificationResults = {
     skipped: string[],
     updated: string[]
