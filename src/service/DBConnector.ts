@@ -1,20 +1,22 @@
 import * as admin from "firebase-admin";
-import {database} from "firebase-admin";
+import _ from "lodash";
 import {AppConfig} from "../model";
 
 export class DBConnector {
 
-    public static async connect(cfg:AppConfig): Promise<database.Database> {
+    public static async connect(cfg:AppConfig): Promise<admin.database.Database> {
         console.log(`Init DB connection: databaseUrl = ${cfg.databaseUrl}; applicationCredentials = ${cfg.applicationCredentials}`)
 
         const filePath = cfg.applicationCredentials
         if(!filePath) throw new Error("Application credentials not found")
 
-        const serviceAccount = await import(filePath);
-        const random = Math.floor(Math.random() * 6) + 1
-        const app = admin.initializeApp({
+        const serviceAccount = await import(filePath)
+        const name = `${Date.now()}-${_.random(10)}`
+        const options = {
             credential: admin.credential.cert(serviceAccount),
-        }, `${Date.now()}${random}`);
+        } as admin.AppOptions
+
+        const app = admin.initializeApp(options, name)
 
         return app.database(cfg.databaseUrl)
     }

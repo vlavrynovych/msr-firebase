@@ -1,6 +1,7 @@
-import {DBConnector} from "../../src";
-import {TestConfig} from "../TestConfig";
-import {expect} from "chai";
+import {expect} from "chai"
+
+import {DBConnector} from "../../src"
+import {TestConfig} from "../TestConfig"
 
 describe("DBConnector", () => {
     it("connect: success", async () => {

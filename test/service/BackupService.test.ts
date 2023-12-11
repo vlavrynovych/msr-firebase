@@ -1,14 +1,15 @@
-import {BackupService, EntityService} from "../../src";
-import {database} from "firebase-admin";
-import {expect} from "chai";
-import {TestEntity, TestConfig, TestUtils} from "../index";
+import {expect} from "chai"
+import {database} from "firebase-admin"
+
+import {BackupService, EntityService} from "../../src"
+import {TestEntity, TestConfig, TestUtils} from "../index"
 
 describe('BackupService', () => {
     let db:database.Database
     let dataService:EntityService<TestEntity>
 
     before(async () => {
-        db = await TestUtils.getDB();
+        db = await TestUtils.getDB()
         const cfg = new TestConfig()
         dataService = new EntityService<TestEntity>(db, cfg.buildPath("data"))
     })
@@ -20,7 +21,7 @@ describe('BackupService', () => {
     it("Backup", async () => {
         // having: seed data
         const a = new TestEntity("20")
-        const key = await dataService.save(a);
+        const key = await dataService.save(a)
 
         // when: backup
         const backupService = new BackupService(db)

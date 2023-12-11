@@ -15,18 +15,17 @@ export class FirebaseHandler implements IDatabaseMigrationHandler {
     backup:BackupService
     schemaVersion:SchemaVersionService
 
-    private constructor(public cfg:AppConfig, public db:database.Database) {
-        this.backup = new BackupService(db);
+    private constructor(public cfg:AppConfig,
+                        public db:database.Database) {
+        this.backup = new BackupService(db)
         const mss = new MigrationScriptService(db, this.cfg.buildPath(this.cfg.tableName))
         this.schemaVersion = new SchemaVersionService(mss, cfg)
     }
 
     public static async getInstance(cfg:AppConfig):Promise<FirebaseHandler> {
-        const db = await DBConnector.connect(cfg);
-        return new FirebaseHandler(cfg, db);
+        const db = await DBConnector.connect(cfg)
+        return new FirebaseHandler(cfg, db)
     }
 
-    getName(): string {
-        return `Firebase v${version}`
-    }
+    getName = () => `Firebase v${version}`
 }

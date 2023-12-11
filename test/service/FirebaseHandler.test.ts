@@ -1,9 +1,10 @@
-import {expect, spy} from "chai";
-import {MigrationScriptExecutor} from "migration-script-runner";
-import sinon from 'sinon';
-import {EntityService, FirebaseHandler} from "../../src";
-import {afterEach, after} from "mocha";
-import {TestConfig, TestUtils, TestEntity} from "../index";
+import {expect, spy} from "chai"
+import sinon from 'sinon'
+import {afterEach, after} from "mocha"
+import {MigrationScriptExecutor} from "migration-script-runner"
+
+import {EntityService, FirebaseHandler} from "../../src"
+import {TestConfig, TestUtils, TestEntity} from "../index"
 
 let processExit = sinon.stub(process, 'exit')
 
