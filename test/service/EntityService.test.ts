@@ -2,12 +2,10 @@ import {TestUtils} from "../TestUtils";
 import {TestConfig} from "../TestConfig";
 import {EntityService} from "../../src";
 import {TestEntity} from "../TestEntity";
-import {database} from "firebase-admin";
 import {expect} from "chai";
 
 describe('EntityService', () => {
 
-    let db:database.Database
     let entityService:EntityService<TestEntity>
 
     const seedKey = 'seed-id'
@@ -21,7 +19,7 @@ describe('EntityService', () => {
     }
 
     before(async () => {
-        db = await TestUtils.getDB()
+        const db = await TestUtils.getDB()
         const cfg = new TestConfig()
         entityService = new EntityService<TestEntity>(db, cfg.buildPath("some-entity"))
         seedData()
